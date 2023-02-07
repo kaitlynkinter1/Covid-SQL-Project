@@ -14,13 +14,13 @@ order by 1,2
 
 '#3.looking at total cases vs total deaths - what is the percentage of people who died that were diagnosed?'
 
-Select location, date, total_cases, total_deaths, (total_deaths /total_cases )*100 as DeathPercentage
+Select location, date, cast(total_cases AS REAL) as TotalCases, total_deaths as TotalDeaths, (total_deaths /cast(total_cases AS REAL))*100 as DeathPercentage
 From coviddeaths c 
 order by 1,2
 
 'looking at one location specifically'
 
-Select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
+Select location, date, cast(total_cases as REAL)as TotalCases, total_deaths as TotalDeaths, (total_deaths/cast(total_cases as REAL))*100 as DeathPercentage
 from coviddeaths c 
 where location like '%states%'
 order by 1,2
