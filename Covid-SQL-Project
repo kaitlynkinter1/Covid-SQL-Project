@@ -69,3 +69,22 @@ from coviddeaths c
 where continent <> ''
 Group by date
 order by 1,2
+
+'JOIN of table coviddeaths and Covid_vaccinations on location and date.'
+
+SElECT *
+FROM coviddeaths cdeath 
+Join Covid_vaccinations cvacc 
+	on cdeath.location = cvacc.location 
+	and cdeath.date =cvacc.date 
+	
+'#1.1 looking at total population vs vaccinations - running total'	
+	
+SElECT cdeath.continent, cdeath.location, cdeath.date, cdeath.population, cvacc.new_vaccinations, SUM(cast(cvacc.new_vaccinations as int)) OVER (PARTITION by cdeath.location order by cdeath.location, cdeath.date) as RollingPopulationVaccinated 
+FROM coviddeaths cdeath 
+Join Covid_vaccinations cvacc 
+	on cdeath.location = cvacc.location 
+	and cdeath.date =cvacc.date 
+where cdeath.continent <> '' 
+and cdeath.location like '%states%'
+order by 1,2,3
